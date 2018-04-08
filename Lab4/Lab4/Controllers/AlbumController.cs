@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Lab4.Clases;
+using Lab4.Models;
 
 namespace Lab4.Controllers
 {
