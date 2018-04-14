@@ -18,11 +18,11 @@ namespace Lab4.Clases
             }
         }
 
-        public List<Estampitas1> Pelicula;
+        public List<Estampitas1> Album;
 
         public Data()
         {
-            Pelicula = new List<Estampitas1>();
+            Album = new List<Estampitas1>();
         }
     }
 }

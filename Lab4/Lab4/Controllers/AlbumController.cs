@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Lab4.Clases;
 using Lab4.Models;
+using System.IO;
 
 namespace Lab4.Controllers
 {
@@ -85,6 +86,39 @@ namespace Lab4.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+
+
+        [HttpPost]
+        public ActionResult Importar(HttpPostedFileBase postedFile)
+        {
+
+            
+            string filePath = string.Empty;
+
+            string path = Server.MapPath("~/Uploads/");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            filePath = path + Path.GetFileName(postedFile.FileName);
+            string extension = Path.GetExtension(postedFile.FileName);
+            postedFile.SaveAs(filePath);
+
+
+            string JSON_DATA = System.IO.File.ReadAllText(filePath);
+            try
+            {
+                var partido = Estampitas2.FromJson(JSON_DATA);
+                return View(partido);
+
+            }
+            catch (Exception)
+            {
+                var partido = Estampitas1.FromJson(JSON_DATA);
+                return View(partido);
             }
         }
     }

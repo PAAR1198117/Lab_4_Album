@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Lab4.Models.Estampitas2>
+
+@{
+    ViewBag.Title = "Importar2";
+}
+
+<h2>Importar2</h2>
+
+<p>
+    @using (Html.BeginForm("Importar", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="postedFile" />
+        <input type="submit" value="Importar" />
+    }
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+        </td>
+    </tr>
+}
+
+</table>
