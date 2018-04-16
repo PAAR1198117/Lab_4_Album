@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "ImportarEspeciales";
+}
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2> UPLOAD CHECKING </h2>
+<h4>CARGAR ARCHIVO </h4>
+@using (Html.BeginForm("ImportarEspeciales", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="FileUpload" />
+    <br />
+    <input type="submit" name="Submit" id="Submit" value="Upload" />
+    @Html.Label(TempData["uploadResult"].ToString())
+    <br />
+    <button type="button" onclick="location.href = '@Url.Action("Index", "Album")'">Back</button>
+}
+
+<h2>ImportarEspeciales</h2>
+
