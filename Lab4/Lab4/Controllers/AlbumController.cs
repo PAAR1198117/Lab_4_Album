@@ -6,11 +6,19 @@ using System.Web.Mvc;
 using Lab4.Clases;
 using Lab4.Models;
 using System.IO;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Lab4.Controllers
 {
     public class AlbumController : Controller
     {
+        static Dictionary<string, Estampitas1> dictionary;
+        static Dictionary<string, bool> Checking;
+
         // GET: Album
         public ActionResult Index()
         {
@@ -88,38 +96,65 @@ namespace Lab4.Controllers
                 return View();
             }
         }
-
-
-
         [HttpPost]
-        public ActionResult Importar(HttpPostedFileBase postedFile)
+        public ActionResult ImportarEstampas(HttpPostedFileBase postedFile)
         {
-
-            
-            string filePath = string.Empty;
-
-            string path = Server.MapPath("~/Uploads/");
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            filePath = path + Path.GetFileName(postedFile.FileName);
-            string extension = Path.GetExtension(postedFile.FileName);
-            postedFile.SaveAs(filePath);
-
-
-            string JSON_DATA = System.IO.File.ReadAllText(filePath);
+            TempData["uploadResult"] = "";
             try
             {
-                var partido = Estampitas2.FromJson(JSON_DATA);
-                return View(partido);
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
+                        var path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
+                        file.SaveAs(path);
+                        TempData["uploadResult"] = "Archivo subido con éxito";
+
+                        var content = System.IO.File.ReadAllText(path);
+                        dictionary = JsonConvert.DeserializeObject<Dictionary<string, Estampitas1>>(content);
+                    }
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                var partido = Estampitas1.FromJson(JSON_DATA);
-                return View(partido);
+                TempData["uploadResult"] = "este no es el archivo correcto";
+
             }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ImportarEspeciales(HttpPostedFileBase postedFile)
+        {
+            TempData["uploadResult"] = "";
+            try
+            {
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
+                        var path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
+                        file.SaveAs(path);
+                        TempData["uploadResult"] = "Archivo subido con éxito";
+
+                        var content = System.IO.File.ReadAllText(path);
+                        Checking = JsonConvert.DeserializeObject<Dictionary<string, bool>>(content);
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                TempData["uploadResult"] = "este no es el archivo correcto";
+            }
+            return View();
         }
     }
 }

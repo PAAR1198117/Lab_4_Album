@@ -11,13 +11,13 @@ namespace Lab4.Models
     public partial class Estampitas1
     {
         [JsonProperty("faltantes")]
-        public List<long> Faltantes { get; set; }
+        public List<int> Faltantes { get; set; }
 
         [JsonProperty("coleccionadas")]
-        public List<long> Coleccionadas { get; set; }
+        public List<int> Coleccionadas { get; set; }
 
         [JsonProperty("cambios")]
-        public List<long> Cambios { get; set; }
+        public List<int> Cambios { get; set; }
     }
 
     public partial class Estampitas1
