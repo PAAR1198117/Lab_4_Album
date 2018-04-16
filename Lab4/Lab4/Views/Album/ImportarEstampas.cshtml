@@ -1,15 +1,27 @@
-﻿@{
-    ViewBag.Title = "Upload";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@model IEnumerable<Lab4.Models.Estampitas1>
+
+@{
+    ViewBag.Title = "ImportarEstampas";
 }
-<h2> UPLOAD DICTIONARY</h2>
-<h4>CARGAR ARCHIVO </h4>
-@using (Html.BeginForm("Upload", "myDictionary", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <input type="file" name="FileUpload" />
-    <br />
-    <input type="submit" name="Submit" id="Submit" value="Upload" />
-    @Html.Label(TempData["uploadResult"].ToString())
-    <br />
-    <button type="button" onclick="location.href = '@Url.Action("Index", "myDictionary")'">Back</button>
+
+<h2>ImportarEstampas</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
 }
+
+</table>
